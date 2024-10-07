@@ -91,7 +91,7 @@ class SlashCommands(commands.Cog):
             while restart == True:
                 dm_channel = await user.create_dm()
 
-                await dm_channel.send(f"GenAI: Como gostaria de prever o ruído do seu aerofólio? Exemplo:\n\nPrever o ruído com base em parâmetros específicos - Frequency em *Hz* (ex: 3000), Suction Thickness em *m* (ex: 1.8), Chord Length em *m* (ex: 0.28), Angle of Attack em *deg* (ex: 53), Free Stream Velocity em *m/s* (ex: 0.002).")
+                await dm_channel.send(f"*GenAI*: Como gostaria de prever o ruído do seu aerofólio? Exemplo:\n\nPrever o ruído com base em parâmetros específicos - Frequency em *Hz* (ex: 3000), Suction Thickness em *m* (ex: 1.8), Chord Length em *m* (ex: 0.28), Angle of Attack em *deg* (ex: 53), Free Stream Velocity em *m/s* (ex: 0.002).")
                 question = await self.bot.wait_for('message', check=check)                                                                                                  
                 question = question.content
 
@@ -122,15 +122,15 @@ class SlashCommands(commands.Cog):
                 import prever_ruido_aerofolio
                 
                 result = prever_ruido_aerofolio.prever_ruido(frequency, suction_thickness, chord_length, angle_of_attack, free_stream_velocity)
-                await dm_channel.send(f"\n\nGenAI: Predição do Modelo:\n\nRuído estimado de {result} dB.")
+                await dm_channel.send(f"\n\n*GenAI*: Predição do Modelo: Ruído estimado de {result} dB.\n\n")
                 
                 import agente_expert_aeroespacial
                 question = f"Para os parâmetros do aerofólio {resposta_ai}, tem-se um ruído estimado de {result} dB."
                 
                 agent_ai = agente_expert_aeroespacial.start_Completion(question)
-                await dm_channel.send(f"\n\nAI Agente Engenheiro Aeroespacial:\n\n{agent_ai}")
+                await dm_channel.send(f"\n\n*AI Agente Engenheiro Aeroespacial*:\n\n{agent_ai}\n")
                 
-                await dm_channel.send(f"\n\nGenAI: Deseja ter análises de outro aerofólio? Yes / No")
+                await dm_channel.send(f"\n\n*GenAI*: Deseja ter análises de outro aerofólio? Yes / No")
                 restart_confirm = await self.bot.wait_for('message', check=check)
                 
                 if restart_confirm == "No":
